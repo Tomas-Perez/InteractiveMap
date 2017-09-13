@@ -2,6 +2,8 @@
  * @author Tomas Perez Molina
  */
 
+const $ = require('jquery');
+
 const shapesFromSvg = function(filePath) {
     return new Promise((resolve, reject) => {
         $.get(filePath).done((data) => {
@@ -32,7 +34,7 @@ const shapesFromSvg = function(filePath) {
     });
 };
 
-async function drawShapes(filePath, color) {
+async function drawShapes(filePath, map, color) {
     const shapes = await shapesFromSvg(filePath);
 
     return shapes.map(shape => {
@@ -44,7 +46,7 @@ async function drawShapes(filePath, color) {
     });
 }
 
-const setText = function(shape){
+const setText = function(map, shape){
     const box = shape.getBBox();
     const text = map.text(box.x + box.width/2, box.y + box.height/2, shape.data().id);
     text.node.setAttribute("pointer-events", "none");
@@ -59,3 +61,8 @@ const createSets = function(paper, setIds){
     })
 };
 
+module.exports = {
+    drawShapes: drawShapes,
+    setText: setText,
+    createSets: createSets
+}

@@ -37,3 +37,9 @@ const onClick = function(){
         fill: 'green',
     }, 100);
 };
+
+module.exports = {
+    popup: popup,
+    popDown: popDown,
+    onClick: onClick
+}
