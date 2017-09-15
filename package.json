@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Tomas-Perez/InteractiveMap#readme",
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
     "jquery-browserify": "^1.8.1",
     "popper.js": "^1.12.5",

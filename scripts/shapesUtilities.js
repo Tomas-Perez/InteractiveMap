@@ -4,7 +4,7 @@
 
 const $ = require('jquery')
 
-const shapesFromSvg = function shapesFromSvg (filePath) {
+const shapesFromSvg = function (filePath) {
   return new Promise((resolve, reject) => {
     $.get(filePath).done((data) => {
       const paths = []
@@ -32,26 +32,32 @@ const shapesFromSvg = function shapesFromSvg (filePath) {
   })
 }
 
-const drawShapes = async function drawShapes (filePath, map, color) {
+const drawShapes = async function (filePath, map, color) {
   const shapes = await shapesFromSvg(filePath)
 
-  return shapes.map(shape => map.path(shape.d).attr(
-    {
-      'stroke-width': '2',
-      'stroke-opacity': '1',
-      fill: color
-    }).data({ id: shape.id })
-  )
+  return shapes.map(shape => {
+    const path = map.path(shape.d)
+    path.attr(
+      {
+        'stroke-width': '2',
+        'stroke-opacity': '1',
+        fill: color
+      }
+    )
+    path.node.setAttribute('id', shape.id)
+    path.node.setAttribute('class', 'shape')
+    return path
+  })
 }
 
-const setText = function setText (map, shape) {
+const setText = function (map, shape) {
   const box = shape.getBBox()
-  const text = map.text(box.x + box.width / 2, box.y + box.height / 2, shape.data().id)
+  const text = map.text(box.x + box.width / 2, box.y + box.height / 2, shape.node.id)
   text.node.setAttribute('pointer-events', 'none')
   shape.text = text
 }
 
-const createSets = function createSets (paper, setIds) {
+const createSets = function (paper, setIds) {
   return setIds.map((id) => {
     const set = paper.set()
     set.data = { id }
