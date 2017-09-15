@@ -24509,14 +24509,22 @@ shapesPromise.then(() => {
   })
 })
 
-const ph = $('#pop-holder')
-
-ph.popover({
-  trigger: 'manual',
-  animation: false,
-  html: true,
-  container: 'body'
+shapesPromise.then(() => {
+  const shapes = $('.shape')
+  shapes.each((i, shape) => {
+    console.log(shape)
+    $(shape).popover({
+      trigger: 'hover',
+      content: `<h1>${$(shape).attr('id')}</h1>`,
+      animation: false,
+      html: true,
+      container: $('#pop-holder')
+    })
+  })
 })
+
+/*
+const ph = $('#pop-holder')
 
 shapesPromise.then(() => {
   $('.shape').on('mouseover', (evt) => {
@@ -24528,6 +24536,7 @@ shapesPromise.then(() => {
     ph.popover('show')
   }).on('mouseout', () => ph.popover('hide'))
 })
+*/
 
 },{"./animations.js":18,"./shapesUtilities.js":20,"bootstrap":1,"jquery-browserify":14,"popper.js":16,"raphael":17}],20:[function(require,module,exports){
 /**
