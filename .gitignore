@@ -52,3 +52,5 @@ fabric.properties
 out
 gen
 /node_modules/
+*.css
+*.css.map

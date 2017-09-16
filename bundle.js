@@ -22051,6 +22051,8 @@ shapesPromise.then(promise => promise.forEach(shape => {
   set.push(shape)
 }))
 
+console.log('commit')
+
 shapesPromise.then(() => {
   sets.filter(set => set.data.id !== 'D').forEach(set => {
     set.mouseover(animations.popup('#8af62e'))
