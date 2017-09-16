@@ -22043,7 +22043,7 @@ const mapColor = '#15E0FF'
 const map = Raphael('map', '960', '560')
 const sets = utilities.createSets(map, ['A', 'B', 'C', 'D'])
 
-const shapesPromise = utilities.drawShapes('./svg/map.svg', map, mapColor)
+const shapesPromise = utilities.drawShapes('./svg/map2.svg', map, mapColor)
 
 shapesPromise.then(promise => promise.forEach(shape => {
   utilities.setText(map, shape)
