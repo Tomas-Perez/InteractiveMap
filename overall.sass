@@ -1,23 +1,19 @@
-$popover_body_color: red
+$popover_body_color: rgba(255, 255, 255, 0.95)
 $popover_title_color: red
 
 #pop-holder
   position: absolute
 
 .popover-title
-  color: blue
+  background: $popover_body_color
   font-size: 15px
   pointer-events: none
 
 .popover
-  border-color: $popover_body_color
+  border-style: none
   background: $popover_body_color
-  color: black
-  font-size: 10px
   pointer-events: none
 
 .popover.right > .arrow:after
   border-right-color: $popover_body_color
-  color: black
-  font-size: 10px
   pointer-events: none

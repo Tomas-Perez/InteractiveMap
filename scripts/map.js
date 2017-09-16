@@ -15,28 +15,26 @@ const shapesPromise = utilities.drawShapes('./svg/map.svg', map, mapColor)
 
 shapesPromise.then(promise => promise.forEach(shape => {
   utilities.setText(map, shape)
-  const set = sets.find(set => set.data.id === shape.node.id[0])
-  set.push(shape)
+  sets.find(set => set.data.id === shape.node.id[0]).push(shape)
 }))
 
-shapesPromise.then(() => {
-  sets.filter(set => set.data.id !== 'D').forEach(set => {
-    set.mouseover(animations.popup('#8af62e'))
-    set.mouseout(animations.popDown(mapColor))
-    set.click(animations.onClick('green'))
-  })
-})
+shapesPromise.then(() => sets.filter(set => set.data.id !== 'D').forEach(set => addAnimations(set)))
 
-shapesPromise.then(() => {
-  const shapes = $('.shape')
-  shapes.each((i, shape) => {
-    console.log(shape)
-    $(shape).popover({
-      trigger: 'hover',
-      title: $(shape).attr('id'),
-      animation: false,
-      html: true,
-      container: $('#pop-holder')
-    })
+shapesPromise.then(() => $('.shape').each((i, shape) => addPopOver(shape)))
+
+const addPopOver = function (shape) {
+  $(shape).popover({
+    trigger: 'hover',
+    title: $(shape).attr('id'),
+    content: '<h5>Superficieeeee: 542m2</h5>',
+    animation: false,
+    html: true,
+    container: $('#pop-holder')
   })
-})
+}
+
+const addAnimations = function (set) {
+  set.mouseover(animations.popup('#8af62e'))
+  set.mouseout(animations.popDown(mapColor))
+  set.click(animations.onClick('green'))
+}
