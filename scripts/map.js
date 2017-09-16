@@ -2,16 +2,16 @@
  * @author Tomas Perez Molina
  */
 const Raphael = require('raphael')
-const Popper = require('popper.js')
 const utilities = require('./shapesUtilities.js')
 const animations = require('./animations.js')
 const $ = require('jquery-browserify')
-const b = require('bootstrap')
+require('bootstrap')
+const mapColor = '#15E0FF'
 
 const map = Raphael('map', '960', '560')
 const sets = utilities.createSets(map, ['A', 'B', 'C', 'D'])
 
-const shapesPromise = utilities.drawShapes('./svg/map.svg', map, '#15E0FF')
+const shapesPromise = utilities.drawShapes('./svg/map.svg', map, mapColor)
 
 shapesPromise.then(promise => promise.forEach(shape => {
   utilities.setText(map, shape)
@@ -19,14 +19,11 @@ shapesPromise.then(promise => promise.forEach(shape => {
   set.push(shape)
 }))
 
-const msg = document.querySelector('.msg')
-shapesPromise.then(promise => promise.forEach(shape => new Popper(shape.node, msg)))
-
 shapesPromise.then(() => {
   sets.filter(set => set.data.id !== 'D').forEach(set => {
-    set.mouseover(animations.popup)
-    set.mouseout(animations.popDown)
-    set.click(animations.onClick)
+    set.mouseover(animations.popup('#8af62e'))
+    set.mouseout(animations.popDown(mapColor))
+    set.click(animations.onClick('green'))
   })
 })
 
@@ -36,25 +33,10 @@ shapesPromise.then(() => {
     console.log(shape)
     $(shape).popover({
       trigger: 'hover',
-      content: `<h1>${$(shape).attr('id')}</h1>`,
+      title: $(shape).attr('id'),
       animation: false,
       html: true,
       container: $('#pop-holder')
     })
   })
 })
-
-/*
-const ph = $('#pop-holder')
-
-shapesPromise.then(() => {
-  $('.shape').on('mouseover', (evt) => {
-    const bbox = evt.target.getBoundingClientRect()
-    ph.attr('data-content', evt.target.id)
-    ph.attr('data-original-title', `<h1>${evt.target.id}</h1>`)
-    ph[0].style.left = bbox.right + 'px'
-    ph[0].style.top = (bbox.top + (bbox.bottom - bbox.top) / 2) + 'px'
-    ph.popover('show')
-  }).on('mouseout', () => ph.popover('hide'))
-})
-*/

@@ -39,7 +39,7 @@ const drawShapes = async function (filePath, map, color) {
     const path = map.path(shape.d)
     path.attr(
       {
-        'stroke-width': '2',
+        'stroke-width': '1',
         'stroke-opacity': '1',
         fill: color
       }
