@@ -6,12 +6,25 @@ const utilities = require('./shapesUtilities.js')
 const animations = require('./animations.js')
 const $ = require('jquery-browserify')
 require('bootstrap')
-const mapColor = '#15E0FF'
+const tabletop = require('tabletop')
+const mapColor = '#5abd50'
 
 const map = Raphael('map', '960', '560')
 const sets = utilities.createSets(map, ['A', 'B', 'C', 'D'])
 
-const shapesPromise = utilities.drawShapes('./svg/map2.svg', map, mapColor)
+const shapesPromise = utilities.drawShapes('./assets/svg/map2.svg', map, mapColor)
+const rowDict = {}
+
+tabletop.init({
+  key: 'https://docs.google.com/spreadsheets/d/1svu9m62ZU_hCZM33_FBbohbQGYoTBLTBUV6ixITS8Sg/edit?usp=sharing',
+  callback: function (data) {
+    data.forEach(row => {
+      rowDict[row.id] = { state: row.state, currency: row.currency, price: row.price }
+    })
+    shapesPromise.then(() => $('.shape').each((i, shape) => addPopOver(shape)))
+  },
+  simpleSheet: true
+})
 
 shapesPromise.then(promise => promise.forEach(shape => {
   utilities.setText(map, shape)
@@ -20,21 +33,24 @@ shapesPromise.then(promise => promise.forEach(shape => {
 
 shapesPromise.then(() => sets.filter(set => set.data.id !== 'D').forEach(set => addAnimations(set)))
 
-shapesPromise.then(() => $('.shape').each((i, shape) => addPopOver(shape)))
-
 const addPopOver = function (shape) {
-  $(shape).popover({
-    trigger: 'hover',
-    title: $(shape).attr('id'),
-    content: '<h5>Superficieeeee: 542m2</h5>',
-    animation: false,
-    html: true,
-    container: $('#pop-holder')
-  })
+  const queryShape = $(shape)
+  const id = $(shape).attr('id')
+  const dataRow = rowDict[id]
+  if (dataRow) {
+    queryShape.popover({
+      trigger: 'hover',
+      title: `${dataRow.currency}${dataRow.price}`,
+      content: `<p>${dataRow.state}</p>`,
+      animation: false,
+      html: true,
+      container: $('#pop-holder')
+    })
+  }
 }
 
 const addAnimations = function (set) {
-  set.mouseover(animations.popup('#8af62e'))
+  set.mouseover(animations.popup('#63ee59'))
   set.mouseout(animations.popDown(mapColor))
   set.click(animations.onClick('green'))
 }

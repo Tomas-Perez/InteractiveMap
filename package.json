@@ -21,7 +21,8 @@
     "jquery": "^3.2.1",
     "jquery-browserify": "^1.8.1",
     "popper.js": "^1.12.5",
-    "raphael": "^2.2.7"
+    "raphael": "^2.2.7",
+    "tabletop": "^1.5.2"
   },
   "devDependencies": {
     "eslint": "^4.7.0",
