@@ -25,7 +25,7 @@ tabletop.init({
   },
   simpleSheet: true
 })
-
+// test
 shapesPromise.then(promise => promise.forEach(shape => {
   utilities.setText(map, shape)
   sets.find(set => set.data.id === shape.node.id[0]).push(shape)
