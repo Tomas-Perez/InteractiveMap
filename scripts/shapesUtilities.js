@@ -2,7 +2,7 @@
  * @author Tomas Perez Molina
  */
 
-const $ = require('jquery')
+const $ = require('jquery-browserify')
 
 const shapesFromSvg = function (filePath) {
   return new Promise((resolve, reject) => {
