@@ -41,7 +41,7 @@ const addPopOver = function (shape) {
     queryShape.popover({
       trigger: 'hover',
       title: `${dataRow.currency}${dataRow.price}`,
-      content: `<p>${dataRow.state}</p>`,
+      content: createDiv(id, dataRow),
       animation: false,
       html: true,
       container: $('#pop-holder')
@@ -53,4 +53,14 @@ const addAnimations = function (set) {
   set.mouseover(animations.popup('#63ee59'))
   set.mouseout(animations.popDown(mapColor))
   set.click(animations.onClick('green'))
+}
+
+const createDiv = function (id, data) {
+  const img = new Image()
+  img.src = `./assets/lot_images/${id}.png`
+  img.className = 'img-responsive center-block'
+  const div = document.createElement('div')
+  $(div).append(img)
+  div.className = 'popover-content-a'
+  return div
 }

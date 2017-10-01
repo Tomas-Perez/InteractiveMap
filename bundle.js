@@ -82042,7 +82042,7 @@ const addPopOver = function (shape) {
     queryShape.popover({
       trigger: 'hover',
       title: `${dataRow.currency}${dataRow.price}`,
-      content: `<p>${dataRow.state}</p>`,
+      content: createDiv(id, dataRow),
       animation: false,
       html: true,
       container: $('#pop-holder')
@@ -82056,6 +82056,15 @@ const addAnimations = function (set) {
   set.click(animations.onClick('green'))
 }
 
+const createDiv = function (id, data) {
+  const img = new Image()
+  img.src = `./assets/lot_images/${id}.png`
+  img.className = 'img-responsive center-block'
+  const div = document.createElement('div')
+  $(div).append(img)
+  div.className = 'popover-content-a'
+  return div
+}
 },{"./animations.js":369,"./shapesUtilities.js":371,"bootstrap":198,"jquery-browserify":293,"raphael":313,"tabletop":352}],371:[function(require,module,exports){
 /**
  * @author Tomas Perez Molina
